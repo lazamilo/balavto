@@ -79,6 +79,53 @@
   if (!reduce) setInterval(() => { cs.forEach((c, k) => c.classList.toggle('on', k <= ci)); ci = (ci + 1) % (cs.length + 3); }, 420);
   else cs.forEach(c => c.classList.add('on'));
 
+  // ---------- ledger widgets ----------
+  // countries: staircase dot matrix, 15 lit dots
+  const matrix = $('.matrix');
+  if (matrix) {
+    const heights = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5];
+    const lit = new Set([3, 7, 10, 14, 17, 20, 24, 27, 31, 35, 38, 42, 45, 49, 53]);
+    let n = 0;
+    matrix.style.setProperty('--cols', heights.length);
+    matrix.innerHTML = heights.map(h => '<span class="col">' + Array.from({ length: h }, () => {
+      const cls = lit.has(n) ? 'lit' : (n % 11 === 5 ? 'ink' : '');
+      n++;
+      return `<i class="${cls}"></i>`;
+    }).join('') + '</span>').join('');
+  }
+
+  // brands: light up one logo at a time
+  const chips = $$('.logos span');
+  let bi = 0;
+  if (chips.length) {
+    chips[0].classList.add('on');
+    if (!reduce) setInterval(() => { chips[bi].classList.remove('on'); bi = (bi + 1) % chips.length; chips[bi].classList.add('on'); }, 1500);
+  }
+
+  // hours: live open/closed status in Ljubljana time
+  const hoursTile = $('.w--hours');
+  const updateHours = () => {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Ljubljana', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false })
+      .formatToParts(new Date()).map(p => [p.type, p.value]));
+    const h = +parts.hour % 24, m = +parts.minute;
+    const day = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(parts.weekday);
+    const open = day < 5 && h >= 7 && h < 19;
+    const chip = $('.hours__chip', hoursTile);
+    chip.textContent = open ? 'Odprto zdaj' : 'Trenutno zaprto';
+    chip.classList.toggle('closed', !open);
+    $('.hours__now', hoursTile).textContent = `Ajdovščina ${parts.hour}:${parts.minute}`;
+    $('.day__now', hoursTile).style.left = `calc(${((h * 60 + m) / 1440) * 100}% - 1px)`;
+    $$('.week span', hoursTile).forEach((s, k) => s.classList.toggle('today', k === day));
+  };
+  if (hoursTile) { updateHours(); setInterval(updateHours, 30000); }
+
+  // odometer digits
+  const buildOdo = el => {
+    const digits = String(el.dataset.to).split('');
+    el.innerHTML = digits.map(() => '<span class="odo__col">' + Array.from({ length: 20 }, (_, k) => `<span>${k % 10}</span>`).join('') + '</span>').join('');
+    return () => $$('.odo__col', el).forEach((c, k) => gsap.to(c, { yPercent: -((10 + +digits[k]) / 20) * 100, duration: 1.8 + k * .3, ease: 'power3.out' }));
+  };
+
   // ---------- counters ----------
   const runCount = el => {
     const to = +el.dataset.to;
@@ -124,6 +171,13 @@
     gsap.to(el, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   $$('.count').forEach(el => { if (!el.closest('.hero')) ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => runCount(el) }); });
+
+  // ledger widgets
+  $$('.odo').forEach(el => { const roll = buildOdo(el); ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: roll }); });
+  gsap.from('.matrix i', { scale: 0, duration: .5, stagger: { each: .012, from: 'start' }, ease: 'back.out(2.4)', scrollTrigger: { trigger: '.matrix', start: 'top 85%' } });
+  gsap.to('.route__live', { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut', scrollTrigger: { trigger: '.route', start: 'top 80%' } });
+  gsap.from('.loc, .ticket', { y: 16, opacity: 0, duration: .8, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '.route', start: 'top 80%' } });
+  gsap.from('.day__open', { scaleX: 0, duration: 1.4, ease: 'power3.inOut', scrollTrigger: { trigger: '.day', start: 'top 90%' } });
 
   // refurb steps
   const steps = $$('.rstep'), rms = $$('.rm'), meter = $('.refurb__meter span');

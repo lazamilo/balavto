@@ -172,14 +172,71 @@
   </div>
 </section>
 
-<!-- 04 LEDGER · big numbers with hairlines -->
+<!-- 04 LEDGER · live widget dashboard -->
 <section class="ledger">
-  <h2 class="h-lg split"><span class="line"><span>Vse za vaš stroj,</span></span><span class="line muted"><span>na enem dvorišču.</span></span></h2>
-  <div class="ledger__rows">
-    <div class="lrow rv"><b class="lnum mono"><span class="count" data-to="6">0</span></b><p>Svetovnih znamk strojev in priključkov v naši ponudbi.</p></div>
-    <div class="lrow rv"><b class="lnum mono"><span class="count" data-to="15">0</span>+</b><p>Evropskih držav, kamor sami prepeljemo tovore izrednih dimenzij in teže.</p></div>
-    <div class="lrow rv"><b class="lnum mono"><span class="count" data-to="2">0</span></b><p>Lokaciji za rezervne dele. Ajdovščina in dislocirana enota v Krškem.</p></div>
-    <div class="lrow rv"><b class="lnum mono">7–19</b><p>Odprto vsak delovnik od ponedeljka do petka.</p></div>
+  <div class="sec-head">
+    <h2 class="h-xl split"><span class="line"><span>Vse za vaš stroj,</span></span><span class="line muted"><span>na enem dvorišču.</span></span></h2>
+    <p class="lead rv">Stroji, priključki, deli, servis in prevoz pri enem partnerju. Brez posrednikov in brez čakanja na odgovor.</p>
+  </div>
+
+  <div class="dash">
+    <!-- brands -->
+    <article class="w w--brands rv">
+      <div class="w__top">
+        <b class="w__num mono"><span class="odo" data-to="6">6</span></b>
+        <p>Svetovnih znamk strojev in priključkov v naši ponudbi.</p>
+      </div>
+      <div class="logos">
+        <span><img src="assets/logos/Volvo-Iron-Mark-Black-small.svg.png" alt="Volvo"></span>
+        <span><img src="assets/logos/mccloskey-international-300x77-1.png" alt="McCloskey"></span>
+        <span><img src="assets/logos/soilmec-300x77-1.png" alt="Soilmec"></span>
+        <span><img src="assets/logos/lannen_0-300x77-1.png" alt="Lännen"></span>
+        <span><img src="assets/logos/DA-300x77-1.png" alt="DandA"></span>
+        <span><img src="assets/logos/steelwrist-marke-2016-tagline-300x84.png" alt="Steelwrist"></span>
+      </div>
+    </article>
+
+    <!-- parts route -->
+    <article class="w w--route rv">
+      <div class="w__top">
+        <b class="w__num mono"><span class="odo" data-to="2">2</span></b>
+        <p>Lokaciji za rezervne dele. Ajdovščina in dislocirana enota v Krškem.</p>
+      </div>
+      <div class="route">
+        <svg viewBox="0 0 800 260" preserveAspectRatio="none" aria-hidden="true">
+          <path id="routePath" d="M70 190 C 220 40, 380 230, 520 110 S 690 60, 730 80" fill="none" stroke="#D9D9D4" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/>
+          <path class="route__live" d="M70 190 C 220 40, 380 230, 520 110 S 690 60, 730 80" fill="none" stroke="#E3241B" stroke-width="3" stroke-linecap="round"/>
+          <circle r="7" fill="#E3241B"><animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#routePath"/></animateMotion></circle>
+        </svg>
+        <div class="loc loc--a"><i></i><b>Ajdovščina</b><small class="mono">Tovarniška cesta 5b</small></div>
+        <div class="loc loc--b"><i></i><b>Krško</b><small class="mono">Rezervni deli</small></div>
+        <div class="ticket"><span class="chip chip--live">Na poti</span><b>Rezervni deli</b><small>V najkrajšem možnem času do vas</small></div>
+      </div>
+    </article>
+
+    <!-- countries -->
+    <article class="w w--countries rv">
+      <div class="w__top">
+        <b class="w__num mono"><span class="odo" data-to="15">15</span>+</b>
+        <p>Evropskih držav, kamor sami prepeljemo tovore izrednih dimenzij in teže.</p>
+      </div>
+      <div class="matrix" aria-hidden="true"></div>
+    </article>
+
+    <!-- hours live -->
+    <article class="w w--hours rv">
+      <div class="w__top">
+        <span class="chip hours__chip">Odprto zdaj</span>
+        <small class="mono hours__now">--:--</small>
+      </div>
+      <b class="w__num mono">7–19</b>
+      <p>Odprto vsak delovnik od ponedeljka do petka.</p>
+      <div class="day">
+        <div class="day__track"><span class="day__open"></span><span class="day__now"></span></div>
+        <div class="day__scale mono"><span>0</span><span>7</span><span>12</span><span>19</span><span>24</span></div>
+      </div>
+      <div class="week mono"><span>P</span><span>T</span><span>S</span><span>Č</span><span>P</span><span class="off">S</span><span class="off">N</span></div>
+    </article>
   </div>
 </section>
 
@@ -297,9 +354,9 @@
       </div>
     </article>
     <article class="tile tile--hours rv">
-      <small>Delovni čas</small>
-      <b class="mono">Pon – Pet</b>
-      <b class="mono big">7:00 – 19:00</b>
+      <small>Servis gradbene mehanizacije</small>
+      <b class="mono big">Stroj stoji?</b>
+      <b class="mono">Pokličite naš servis.</b>
       <a class="btn btn--ink" href="tel:+38631627398">+386 31 627 398</a>
     </article>
   </div>
